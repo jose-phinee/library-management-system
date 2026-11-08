@@ -128,3 +128,13 @@ Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
 ## Database
 
 Hosted on Neon (PostgreSQL). The schema was applied with `npx prisma migrate deploy` and seeded with `npx prisma db seed`. The connection string is stored in `api/.env` (not committed); see `api/.env.example` for the variable name.
+# Library Management System
+
+## Schema Decisions
+
+**Why Book references Genre instead of embedding it:**
+Book stores a `genreId` foreign key with a `@relation` to the Genre table rather than copying the genre name or data into each book. Genres are shared by many books, so storing them once avoids duplicated data and typos like "Sci-Fi" vs "Science Fiction". Renaming a genre means updating one row, not every book. It also lets the database enforce that a book can only point to a genre that exists, and makes it easy to query all books in a genre.
+
+## Database
+
+Hosted on Neon (PostgreSQL). The schema was applied with `npx prisma migrate deploy` and seeded with `npx prisma db seed`. The connection string is stored in `api/.env` (not committed); see `api/.env.example` for the variable name.
